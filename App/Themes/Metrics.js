@@ -14,7 +14,7 @@ const metrics = {
   horizontalLineHeight: 1,
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
-  navBarHeight: 50,
+  navBarHeight: 55,
   buttonRadius: 4,
   icons: {
     tiny: 15,

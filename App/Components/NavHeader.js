@@ -1,21 +1,28 @@
 import React, {Component} from 'react';
-import {View, Text, StatusBar} from 'react-native';
+import {View, Text, StatusBar, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {BorderlessButton, TouchableOpacity} from 'react-native-gesture-handler';
 import styles from './Styles/NavHeaderStyles';
 import {Colors} from '../Themes';
 
 export default class HomeScreen extends Component {
   render() {
-    const {title, iconName} = this.props;
+    const {title, iconName, onIconPress} = this.props;
+    const Touchable =
+      Platform.OS === 'android' ? BorderlessButton : TouchableOpacity;
 
     return (
-      <View>
+      <>
         <StatusBar backgroundColor={Colors.baseColor} />
         <View style={styles.container}>
           <Text style={styles.title}>{title}</Text>
-          <Icon color="white" size={30} name={iconName} />
+          {iconName && (
+            <Touchable onPress={onIconPress}>
+              <Icon color="white" size={25} name={iconName} />
+            </Touchable>
+          )}
         </View>
-      </View>
+      </>
     );
   }
 }

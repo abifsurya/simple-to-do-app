@@ -9,7 +9,7 @@ export default class LaunchScreen extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.props.navigation.navigate('HomeScreen');
-    }, 3000);
+    }, 2000);
   }
 
   render() {

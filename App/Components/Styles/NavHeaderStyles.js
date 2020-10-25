@@ -7,7 +7,8 @@ export default StyleSheet.create({
     backgroundColor: Colors.baseColor,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    justifyContent: 'space-between',
+    padding: 15,
   },
   icon: {
     color: 'white',
