@@ -63,7 +63,6 @@ export class AddEditScreen extends Component {
   };
 
   render() {
-    console.tron.log('Props', this.state);
     return (
       <SafeAreaView style={{flex: 1}}>
         <NavHeader

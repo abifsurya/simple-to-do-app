@@ -29,7 +29,6 @@ export function* sagaEditTodo(api, {data}) {
       old_id: data.id,
       id: Math.random(),
     };
-    console.tron.log('Reuslt', result);
     yield put(ToDoActions.editTodoSuccess(result));
   } else {
     yield put(ToDoActions.editTodoFailure());
