@@ -14,6 +14,7 @@ import NavHeader from '../Components/NavHeader';
 import EmptyView from '../Components/View/EmptyView';
 import RadioButton from '../Components/Button/RadioButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {RNToasty} from 'react-native-toasty';
 import {Picker} from '@react-native-community/picker';
 import {connect} from 'react-redux';
 
@@ -64,6 +65,15 @@ export class HomeScreen extends Component {
     this.renderModalSort = this.renderModalSort.bind(this);
     this.renderModalFilter = this.renderModalFilter.bind(this);
     this.showActionSheet = this.showActionSheet.bind(this);
+  }
+
+  componentDidUpdate() {
+    if (this.props.apiStatus.type) {
+      if (this.props.apiStatus.type === 'deleteList') {
+        RNToasty.Success({title: 'To Do Deleted'});
+      }
+      this.props.doClearApiStatus();
+    }
   }
 
   showActionSheet(item) {
@@ -269,6 +279,7 @@ export class HomeScreen extends Component {
 
 const mapStateToProps = (state) => ({
   todoList: ToDoSelectors.selectTodoList(state),
+  apiStatus: ToDoSelectors.selectApiStatus(state),
   savedList: ToDoSelectors.selectSavedList(state),
   categoryList: ToDoSelectors.selectCategoryList(state),
 });
@@ -276,6 +287,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   doDeleteTodo: (e) => dispatch(ToDoActions.deleteTodoRequest(e)),
   doCompleteTodo: (e) => dispatch(ToDoActions.completeTodoRequest(e)),
+  doClearApiStatus: (e) => dispatch(ToDoActions.clearApiStatus(e)),
   doSortList: (e) => dispatch(ToDoActions.sortList(e)),
   doFilterList: (e) => dispatch(ToDoActions.filterList(e)),
 });
