@@ -12,12 +12,22 @@ import ActionSheet from 'react-native-actionsheet';
 import NavHeader from '../Components/NavHeader';
 import EmptyView from '../Components/View/EmptyView';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {RNToasty} from 'react-native-toasty';
 import {connect} from 'react-redux';
 
 // Redux
 import ToDoActions, {ToDoSelectors} from '../Redux/ToDoRedux';
 
 export class HomeScreen extends Component {
+  componentDidUpdate() {
+    if (this.props.apiStatus.type) {
+      if (this.props.apiStatus.type === 'deleteList') {
+        RNToasty.Success({title: 'To Do Deleted'});
+      }
+      this.props.doClearApiStatus();
+    }
+  }
+
   showActionSheet = (item) => {
     this.setState({item});
     this.ActionSheet.show();
@@ -124,11 +134,13 @@ export class HomeScreen extends Component {
 
 const mapStateToProps = (state) => ({
   todoList: ToDoSelectors.selectTodoList(state),
+  apiStatus: ToDoSelectors.selectApiStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   doDeleteTodo: (e) => dispatch(ToDoActions.deleteTodoRequest(e)),
   doCompleteTodo: (e) => dispatch(ToDoActions.completeTodoRequest(e)),
+  doClearApiStatus: (e) => dispatch(ToDoActions.clearApiStatus(e)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

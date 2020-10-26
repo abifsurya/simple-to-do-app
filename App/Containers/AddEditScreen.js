@@ -4,7 +4,7 @@ import {SafeAreaView, View, Text, TextInput} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import NavHeader from '../Components/NavHeader';
 import LoadingView from '../Components/View/LoadingView';
-import Toast from 'react-native-easy-toast';
+import {RNToasty} from 'react-native-toasty';
 import styles from './Styles/AddEditScreenStyle';
 
 // Redux
@@ -31,11 +31,13 @@ export class AddEditScreen extends Component {
   componentDidUpdate() {
     if (this.props.apiStatus.type) {
       if (this.props.apiStatus.type === 'saveForm') {
-        this.refs.toast.show('To Do Added');
+        RNToasty.Success({title: 'To Do Added'});
         this.props.navigation.goBack();
       } else if (this.props.apiStatus.type === 'editForm') {
-        this.refs.toast.show('To Do Edited');
+        RNToasty.Success({title: 'To Do Edited'});
         this.props.navigation.goBack();
+      } else if (this.props.apiStatus.type === 'error') {
+        RNToasty.Error({title: 'Error Occured. Please try again later'})
       }
       this.props.doClearApiStatus();
     }
@@ -111,7 +113,6 @@ export class AddEditScreen extends Component {
           </Picker>
         </View>
         <LoadingView loading={this.props.fetching} />
-        <Toast ref="toast" poisition="bottom" />
       </SafeAreaView>
     );
   }
